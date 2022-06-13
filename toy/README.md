@@ -10,7 +10,9 @@ pip install --no-deps -r requirements.txt
 
 The part of repository highly depends on the [pytorch-lightning template](https://github.com/ashleve/lightning-hydra-template). The hyper-parameters are stored in `configs/`. The executable commmands are included in `bash/`. The visualization is realized in `notebooks/variational_wgf.ipynb`.
 
-### Reproduce
+## Reproduce
+
+For example:
 
 ```
 python run.py -m paper=gmm_d2 logger=wandb seed=1,2,3,4,5 logger.wandb.tags=\["reproduce"\] mode=exp
