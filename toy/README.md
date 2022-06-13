@@ -8,7 +8,7 @@ pip install --no-deps -r requirements.txt
 
 ## Repository structure
 
-The part of repository highly depends on the [pytorch-lightning template](https://github.com/ashleve/lightning-hydra-template). The hyper-parameters are stored in `configs/`. The executable commmands are included in `bash/`. The visualization is achieved in `notebooks/variational_wgf.ipynb`.
+The part of repository highly depends on the [pytorch-lightning template](https://github.com/ashleve/lightning-hydra-template). The hyper-parameters are stored in `configs/`. The executable commmands are included in `bash/`. The visualization is realized in `notebooks/variational_wgf.ipynb`.
 
 ### Reproduce
 
