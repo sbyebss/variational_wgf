@@ -1,0 +1,41 @@
+# @package _global_
+
+# to execute this experiment run:
+# python run.py experiment=ringnorm logger=wandb 
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: bayesian_model.yaml
+  - override /datamodule: base_posterior_datamodule.yaml
+  - override /callbacks: bayesian.yaml
+  - override /logger: null
+
+name: "ringnorm"
+epochs_per_Pk: 5
+
+trainer:
+  max_epochs: 45
+
+model:
+  lr_g: 1.0e-5
+  lr_h: 1.0e-5
+  T_net:
+    hidden_dim: 32
+    num_layer: 3
+  
+  h_net:
+    hidden_dim: 32
+    num_layer: 3
+
+  epochs_per_val: 10
+
+datamodule:
+  ds_name: ${name}
+  batch_size: 1024
+  n_train_samples: 102400  
+  input_dim: 21
+  data_batch_size:  512
+
+logger:
+  wandb:
+    tags: ["debug"]

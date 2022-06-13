@@ -1,0 +1,13 @@
+defaults:
+  - base_img_datamodule
+
+dl:
+  batch_size: 32
+  pin_memory: false
+
+dataset: MNIST
+image_size: 32
+channel: 1
+
+
+random_flip: false

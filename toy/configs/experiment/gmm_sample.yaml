@@ -1,0 +1,49 @@
+# @package _global_
+
+# to execute this experiment run:
+# python run.py experiment=gmm_sample logger=wandb 
+
+# python run.py experiment=gmm_sample datamodule.input_dim=2 model.T_net.hidden_dim=8 model.h_net.hidden_dim=8 model.T_net.num_layer=2 model.h_net.num_layer=2 logger=wandb 
+defaults:
+  - override /mode: exp.yaml
+  - override /model: gmm_model.yaml
+  - override /datamodule: gmm_datamodule.yaml
+  - override /callbacks: gmm.yaml
+  - override /logger: null
+
+# we override default configurations with nulls to prevent them from loading at all
+# instead we define all modules and their paths directly in this config,
+# so everything is stored in one place
+
+# name of the run determines folder name in logs
+# it's also accessed by loggers
+name: "gmm_sample"
+
+epochs_per_Pk: 1
+
+model:
+  module:
+    _target_: src.models.sample_model.SampleModule
+
+  lr_g: 1.0e-3 #tune
+  lr_h: 1.0e-3
+  schedule_learning_rate: 1
+  lr_schedule_scale_t: 0.4 #tune
+  lr_schedule_scale_h: 0.4 #tune  
+  lr_schedule_epoch: 20 #tune
+  
+  type_q: "gmm"
+  energy_type: "kl_sample"
+  step_a: 0.1
+
+trainer:
+  max_epochs: 50
+
+datamodule:
+  module:
+    _target_: src.datamodules.gmm_datamodule.GMMTwoSampleDataModule
+
+logger:
+  wandb:
+    group: "KL_TwoSample_GMM"
+    tags: ["two_sample","gmm","debug"]

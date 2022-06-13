@@ -1,0 +1,89 @@
+# @package _global_
+
+defaults:
+  - override /mode: paper
+  - override /model: null
+  - override /datamodule: null
+  - override /logger: null
+  - override /callbacks: gmm.yaml
+
+print_config: false
+ignore_warnings: true
+test_after_training: false
+seed: 1
+name: gmm
+
+epochs_per_Pk: 1
+trainer:
+  _target_: pytorch_lightning.Trainer
+  gpus: 1
+  max_epochs: 40
+  progress_bar_refresh_rate: 5
+  resume_from_checkpoint: null
+  weights_summary: null
+  reload_dataloaders_every_n_epochs: ${epochs_per_Pk}
+  num_sanity_val_steps: 0
+  log_every_n_steps: 50
+model:
+  module:
+    _target_: src.models.kl_gmm_model.GMMModule
+  lr_g: 0.001
+  lr_h: 0.001
+  schedule_learning_rate: 1
+  lr_schedule_scale_t: 0.4
+  lr_schedule_scale_h: 0.4
+  lr_schedule_epoch: 20
+  step_a_schedule_epoch: 20
+  step_a_schedule_scale: 0.5
+  weight_decay: 1.0e-07
+  # map_type: T
+  T_net:
+    _target_: src.networks.mlp.Fully_connected
+    res: 1
+    hidden_dim: 64
+    input_dim: ${datamodule.input_dim}
+    output_dim: ${datamodule.input_dim}
+    num_layer: 4
+    activation: Prelu
+    full_activ: 1
+    batch_nml: 0
+    dropout: 0.04
+    quadr: 0
+  h_net:
+    _target_: src.networks.mlp.Fully_connected
+    hidden_dim: 64
+    input_dim: ${datamodule.input_dim}
+    output_dim: 1
+    num_layer: 3
+    activation: Prelu
+    final_actv: Prelu
+    quadr: 0
+    sigmoid: 1
+  non_log_ratio: ${model.h_net.sigmoid}
+  smooth_h: 1
+  crank_nicolson: 0
+  N_outer_ITERS: 2
+  N_inner_ITERS: 3
+  energy_type: kl_density
+  dk_formula: 0
+  step_a: 0.1
+  mu_equal_q: ${datamodule.mu_equal_q}
+  p0_equal_q: ${datamodule.p0_equal_q}
+  epochs_per_Pk: ${epochs_per_Pk}
+datamodule:
+  module:
+    _target_: src.datamodules.gmm_datamodule.GMMDataModule
+  batch_size: 512
+  n_train_samples: 512000
+  input_dim: 32
+  num_gmm_component: 10
+  num_comp_kde: 15
+  target_uf_bound: 3
+  mu_var: ${datamodule.p0_std}
+  p0_std: 4.0
+  num_workers: 0
+  pin_memory: false
+  mu_equal_q: false
+  p0_equal_q: false
+
+experiment_mode: true

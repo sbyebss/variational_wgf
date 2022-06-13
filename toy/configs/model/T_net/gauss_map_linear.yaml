@@ -1,0 +1,6 @@
+_target_: src.networks.mlp.FC_linear
+res: 1
+hidden_dim: 64  
+input_dim: ${datamodule.input_dim}
+output_dim: ${datamodule.input_dim}    
+num_layer: 1

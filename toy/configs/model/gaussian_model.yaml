@@ -1,0 +1,35 @@
+defaults:
+  - T_net: gauss_map_linear
+
+module:
+  _target_: src.models.kl_gmm_model.GMMModule
+
+lr_g: 5.0e-3
+lr_h: 5.0e-3  
+schedule_learning_rate: 0
+weight_decay: 0
+
+h_net:
+  _target_: src.networks.mlp.Fully_connected  
+  hidden_dim: 64
+  input_dim: ${datamodule.input_dim}
+  output_dim: 1
+  num_layer: 1
+  activation: 'Prelu'
+  final_actv: 'Prelu'  
+  quadr: 1   
+  sigmoid: 0
+
+
+# loss related, 
+non_log_ratio: 1 # ${model.h_net.quadr}
+smooth_h: 0
+crank_nicolson: 0
+
+N_outer_ITERS: 1
+N_inner_ITERS: 3
+energy_type: "kl_density"
+dk_formula: 0
+step_a: 0.05
+
+epochs_per_Pk: ${epochs_per_Pk}

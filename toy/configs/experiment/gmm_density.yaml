@@ -1,0 +1,19 @@
+# @package _global_
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: gmm_model.yaml
+  - override /datamodule: gmm_datamodule.yaml
+  - override /logger: null
+  - override /callbacks: gmm.yaml
+
+name: "gmm"
+epochs_per_Pk: 1
+
+trainer:
+  max_epochs: 40
+
+logger:
+  wandb:
+    group: "KL_divergence"
+    tags: ["debug"]

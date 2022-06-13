@@ -1,0 +1,14 @@
+module:
+  _target_: src.datamodules.gen_energy_datamodule.BarenblattDataModule
+
+batch_size: 1024
+n_train_samples: 512000
+q_bound_scale: 1.5
+p0_bound: 0.25
+
+input_dim: 3
+t0: 1.0e-3
+porous_m: 2
+
+num_workers: 0
+pin_memory: false

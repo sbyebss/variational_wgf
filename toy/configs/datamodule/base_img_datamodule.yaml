@@ -1,0 +1,26 @@
+module:
+  _target_: src.datamodules.image_datamodule.ImgDataModule
+
+dl:
+  batch_size: ??
+  pin_memory: false
+  num_workers: 0
+
+dataset: ??
+image_size: ??
+channel: ??
+path: ${data_dir} # data_dir is specified in config.yaml
+dim:
+  - ${datamodule.channel}
+  - ${datamodule.image_size}
+  - ${datamodule.image_size}
+
+
+random_flip: true
+logit_transform: false
+uniform_dequantization: false
+gaussian_dequantization: false
+rescaled: true
+image_mean:
+image_std:
+

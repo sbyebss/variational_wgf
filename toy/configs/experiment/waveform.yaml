@@ -1,0 +1,39 @@
+# @package _global_
+
+# to execute this experiment run:
+# python run.py experiment=waveform logger=wandb 
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: bayesian_model.yaml
+  - override /datamodule: base_posterior_datamodule.yaml
+  - override /callbacks: bayesian.yaml
+  - override /logger: null
+
+name: "waveform"
+epochs_per_Pk: 10
+
+trainer:
+  max_epochs: 50
+
+model:
+  lr_g: 1.0e-5
+  lr_h: 5.0e-5
+  T_net:
+    hidden_dim: 32
+    num_layer: 3
+  
+  h_net:
+    hidden_dim: 32
+    num_layer: 3
+
+  epochs_per_val: 10
+
+datamodule:
+  ds_name: ${name}
+  input_dim: 22
+  data_batch_size: 1024
+
+logger:
+  wandb:
+    tags: ["debug"]

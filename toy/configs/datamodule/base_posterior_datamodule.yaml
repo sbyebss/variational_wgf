@@ -1,0 +1,13 @@
+module:
+  _target_: src.datamodules.bayesian_datamodule.BayesianDataModule
+
+ds_name: 'banana'
+batch_size: 1024
+n_train_samples: 102400
+data_batch_size: 512
+mu_var: 3
+
+num_workers: 0
+pin_memory: false
+
+clip_alpha: 8.0

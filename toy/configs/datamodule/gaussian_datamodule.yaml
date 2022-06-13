@@ -1,0 +1,12 @@
+module:
+  _target_: src.datamodules.gmm_datamodule.GMMDataModule
+batch_size: 1024
+num_workers: 0
+num_gmm_component: 1
+input_dim: 16
+mu_var: 1.5
+p0_std: 1.0  
+n_train_samples: 512000
+
+mu_equal_q: False
+p0_equal_q: False

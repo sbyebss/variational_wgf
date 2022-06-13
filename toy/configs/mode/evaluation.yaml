@@ -1,0 +1,18 @@
+# @package _global_
+
+experiment_mode: False
+
+# allows for custom naming of the experiment
+name: ???
+
+hydra:
+  run:
+    dir: logs/papers_eval/${name}/${datamodule.input_dim}/${seed}
+  sweep:
+    dir: logs/papers_eval/${name}
+    subdir: ${datamodule.input_dim}/${seed}
+
+skip_train: True
+test_after_training: True
+
+checkpoint_path: ${oc.env:ROOT_PATH}/logs/papers/${name}/multirun/${datamodule.input_dim}/${seed}/checkpoints/last.ckpt

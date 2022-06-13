@@ -1,0 +1,42 @@
+# @package _global_
+
+# to execute this experiment run:
+# python run.py experiment=splice logger=wandb 
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: bayesian_model.yaml
+  - override /datamodule: base_posterior_datamodule.yaml
+  - override /callbacks: bayesian.yaml
+  - override /logger: null
+
+name: "splice"
+epochs_per_Pk: 4
+
+trainer:
+  max_epochs: 200
+
+model:
+  lr_g: 1.0e-4
+  lr_h: 1.0e-4
+  T_net:
+    hidden_dim: 128
+    num_layer: 4
+  
+  h_net:
+    hidden_dim: 128
+    num_layer: 3
+  
+  N_inner_ITERS: 5
+  epochs_per_val: 10
+
+datamodule:
+  ds_name: ${name}
+  batch_size: 1024
+  n_train_samples: 102400  
+  input_dim: 61
+  data_batch_size:  1024
+
+logger:
+  wandb:
+    tags: ["debug"]

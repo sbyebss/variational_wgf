@@ -1,0 +1,43 @@
+defaults:
+  - T_net: gmm_map_mlp
+
+module:
+  _target_: src.models.kl_gmm_model.GMMModule
+
+lr_g: 1.0e-3 #tune
+lr_h: 1.0e-3
+pretrain_lr: 8.0e-3
+schedule_learning_rate: 1
+lr_schedule_scale_t: 0.4 #tune
+lr_schedule_scale_h: 0.4 #tune  
+lr_schedule_epoch: 20 #tune  
+step_a_schedule_epoch: 20
+step_a_schedule_scale: 0.5
+weight_decay: 1.0e-7
+
+h_net:
+  _target_: src.networks.mlp.Fully_connected  
+  hidden_dim: 64 
+  input_dim: ${datamodule.input_dim}
+  output_dim: 1
+  num_layer: 2 
+  activation: 'Prelu'
+  final_actv: 'Prelu'  
+  quadr: 0
+  sigmoid: 1
+  
+non_log_ratio: ${model.h_net.sigmoid}
+# b_constraint: null
+smooth_h: ${model.h_net.sigmoid}
+crank_nicolson: 0 
+
+N_outer_ITERS: 2
+N_inner_ITERS: 3
+energy_type: "kl_density"
+dk_formula: 0
+step_a: 0.1
+mu_equal_q: ${datamodule.mu_equal_q}
+p0_equal_q: ${datamodule.p0_equal_q}
+
+epochs_per_Pk: ${epochs_per_Pk}
+epochs_per_val: 10

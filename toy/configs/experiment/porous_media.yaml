@@ -1,0 +1,23 @@
+# @package _global_
+
+# to execute this experiment run:
+# python run.py -m experiment=gmm_density datamodule.input_dim=32 datamodule.target_uf_bound=3.0  datamodule.num_gmm_component=10 name="paper/gmm" model.T_net.hidden_dim=64 model.h_net.hidden_dim=64 seed=1,2,3,4,5 logger=wandb 
+
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: general_energy_g.yaml
+  - override /datamodule: gen_energy_datamodule.yaml
+  - override /logger: null
+  - override /callbacks: gen_energy.yaml
+
+name: "porous_media"
+epochs_per_Pk: 2
+
+trainer:
+  max_epochs: 100
+
+logger:
+  wandb:
+    group: "porous_media"  
+    tags: ["debug"]

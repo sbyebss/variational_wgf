@@ -1,0 +1,13 @@
+# @package _global_
+
+experiment_mode: True
+
+# allows for custom naming of the experiment
+name: ???
+
+hydra:
+  run:
+    dir: logs/papers/${name}/${datamodule.input_dim}/${seed}
+  sweep:
+    dir: logs/papers/${name}/multirun
+    subdir: ${datamodule.input_dim}/${seed}

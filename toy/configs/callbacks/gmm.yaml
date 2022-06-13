@@ -1,0 +1,6 @@
+defaults:
+  - default.yaml
+
+symkl:
+  _target_: src.callbacks.gmm_callbacks.GMMprocess_Error_Cb
+  work_dir: ${work_dir}

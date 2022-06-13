@@ -1,0 +1,1 @@
+python run.py -m experiment=gaussian_density mode=paper model/T_net=gauss_map_nonlinear datamodule.input_dim=2,6,12,16,32,64 name="gauss_nonlinear" 'seed=range(0,15)' logger=wandb  logger.wandb.tags=\["baseline"\] 

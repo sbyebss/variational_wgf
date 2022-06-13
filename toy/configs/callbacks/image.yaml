@@ -1,0 +1,8 @@
+defaults:
+  - default.yaml
+
+img_visualization:
+  _target_: src.callbacks.img_callbacks.ImgViz
+
+# fid:
+#   _target_: src.callbacks.img_callbacks.FIDSample

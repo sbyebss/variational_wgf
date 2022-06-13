@@ -1,0 +1,19 @@
+module:
+  _target_: src.datamodules.gmm_datamodule.GMMDataModule
+
+batch_size: 512
+n_train_samples: 512000
+
+input_dim: 13
+num_gmm_component: 10
+num_comp_kde: 15
+target_uf_bound: 5
+
+mu_var: ${datamodule.p0_std}
+p0_std: 4.0  
+
+num_workers: 0
+pin_memory: false
+
+mu_equal_q: False
+p0_equal_q: False

@@ -1,0 +1,6 @@
+_target_: src.networks.my_icnn.ICNN
+input_dim: ${datamodule.input_dim}
+hidden_dim: 10
+num_layer: 3
+activation: 'celu'
+batch_size: ${datamodule.batch_size}

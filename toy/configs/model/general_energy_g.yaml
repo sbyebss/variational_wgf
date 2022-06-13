@@ -1,0 +1,46 @@
+defaults:
+  - T_net: porous_map_dense_icnn
+
+module:
+  _target_: src.models.gen_energy_model.GeneralEnergyModule
+
+lr_g: 1.0e-3 #tune
+lr_h: 1.0e-3
+skip_pretrain: False
+pretrain_lr: 8.0e-3
+schedule_learning_rate: 0
+weight_decay: 1.0e-7
+
+# map_type: "nabla_g"
+
+h_net:
+  _target_: src.networks.mlp.Fully_connected  
+  hidden_dim: 16
+  input_dim: ${datamodule.input_dim}
+  output_dim: 1
+  num_layer: 2
+  activation: 'celu'
+  final_actv: 'Prelu'  
+  quadr: 0
+  sigmoid: 0
+  
+non_log_ratio: 1
+smooth_h: 0 # change sigmoid and smooth_h to choose which loss to use
+
+crank_nicolson: 0 
+curr_weight: 0.5
+last_weight: 0.5
+
+porous_m: ${datamodule.porous_m}   
+
+N_outer_ITERS: 1
+N_inner_ITERS: 3
+energy_type: "gen_entropy"
+step_a: 0.0005
+
+epochs_per_Pk: ${epochs_per_Pk}
+epochs_per_eval: 4
+
+plot_bound: 1
+
+dk_formula: null

@@ -1,0 +1,32 @@
+# @package _global_
+
+# to execute this experiment run:
+# python run.py experiment=gaussian_density
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: gaussian_model
+  - override /datamodule: gaussian_datamodule
+  - override /logger: null
+# we override default configurations with nulls to prevent them from loading at all
+# instead we define all modules and their paths directly in this config,
+# so everything is stored in one place
+
+# name of the run determines folder name in logs
+# it's also accessed by loggers
+name: "gauss"
+
+epochs_per_Pk: 1
+
+trainer:
+  max_epochs: 20
+
+callbacks:
+  ou_error:
+    _target_: src.callbacks.ou_callbacks.OUprocess_Error_Cb
+    eval_mcmc: 0
+
+logger:
+  wandb:
+    group: "KL_divergence"
+    tags: ["debug","gauss"]

@@ -1,0 +1,5 @@
+defaults:
+  - default.yaml
+
+acc_llh:
+  _target_: src.callbacks.bayesian_callbacks.Accuracy_LogLikelihood_Cb
