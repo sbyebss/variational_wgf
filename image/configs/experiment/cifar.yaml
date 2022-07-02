@@ -1,0 +1,66 @@
+# @package _global_
+
+# python run.py experiment=cifar
+
+defaults:
+  - override /mode: exp.yaml
+  - override /trainer: default.yaml
+  - override /model: null
+  - override /datamodule: cifar_datamodule.yaml
+  - override /callbacks: null
+  - override /logger: null
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+# name of the run determines folder name in logs
+# it's also accessed by loggers
+name: "cifar_pub"
+
+seed: 12345
+
+trainer:
+  min_epochs: 1
+  max_epochs: 5000
+
+model:
+  module:
+    _target_: src.models.sn_model.SNModel
+  x_shape:
+    - ${datamodule.channel}
+    - ${datamodule.image_size}
+    - ${datamodule.image_size}
+  z_shape:
+    - ${datamodule.channel}
+    - ${datamodule.image_size}
+    - ${datamodule.image_size}
+  data_length: ${datamodule.data_length}
+
+  generator:
+    _target_: src.networks.unet.Unet
+    dim: 64
+    in_channel: 3
+  discriminator:
+    _target_: src.networks.sn_32.Discriminator
+    df_dim: 128
+    in_channel: ${datamodule.channel}
+
+  g_lr: 2e-4
+  d_lr: 2e-4
+  beta1: 0.0
+  beta2: 0.9
+  n_critic: 5
+  w2_weight: 0.1
+
+callbacks:
+  imgviz:
+    _target_: src.callbacks.img_cb.ImgViz
+
+  iterloop:
+    _target_: src.callbacks.iterate_loop.IterateLoopCb
+    epoch_per_iter: 20
+
+logger:
+  wandb:
+    tags:
+      - bufcnt

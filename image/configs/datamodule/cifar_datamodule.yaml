@@ -1,0 +1,10 @@
+defaults:
+  - base_img_datamodule
+
+dl:
+  batch_size: 64
+
+dataset: CIFAR10
+image_size: 32
+channel: 3
+data_length: 50000
