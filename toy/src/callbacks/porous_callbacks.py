@@ -5,7 +5,7 @@ from src.callbacks.diffusion import Diffusion
 from src.logger.jam_wandb import prefix_metrics_keys
 from src.callbacks.metric_zoo.porous_media import *
 from src.callbacks.metric_zoo.target_funcional import gen_entropy_variational_func, gen_entropy_exact_func
-import jacinle.io as io
+from jammy import io
 
 
 class Plot_Compare_Porous_Cb(DataCb):
