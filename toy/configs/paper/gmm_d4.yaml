@@ -16,7 +16,7 @@ name: gmm
 epochs_per_Pk: 1
 trainer:
   _target_: pytorch_lightning.Trainer
-  gpus: 1
+
   max_epochs: 40
   progress_bar_refresh_rate: 5
   resume_from_checkpoint: null
